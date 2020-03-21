@@ -1,5 +1,6 @@
 package com.example.android.homechat;
 
+import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -11,6 +12,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -37,6 +43,39 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        ListView messageLV = (ListView) findViewById(R.id.content_scrolling);
+        System.out.println("TEST "+messageLV);
+
+        messageLV.setAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                System.out.println("TEST HM");
+                return 1;
+            }
+
+            @Override
+            public Object getItem(int i) {
+                if(i == 0)
+                    return "LOL";
+                return null;
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                System.out.println("TEST WTF");
+                if(view == null)
+                    view = getLayoutInflater().inflate(R.layout.message_layout, viewGroup, false);
+                TextView msgTextView = view.findViewById(R.id.msgTextView);
+                msgTextView.setText("LOL");
+                return view;
             }
         });
     }

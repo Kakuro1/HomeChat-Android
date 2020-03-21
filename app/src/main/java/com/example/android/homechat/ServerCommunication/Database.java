@@ -10,6 +10,8 @@ public class Database {
     private FirebaseDatabase database;
     private DatabaseReference ref;
 
-    public Database() { }
+    public Database() {
+
+    }
 
 }
