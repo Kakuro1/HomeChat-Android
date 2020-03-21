@@ -14,6 +14,8 @@ import android.view.MenuItem;
 
 public class ScrollingActivity extends AppCompatActivity {
 
+    private static final String TAG = "ScrollingActivity";
+
     /**
      * onCreate for the Activity
      * @param savedInstanceState

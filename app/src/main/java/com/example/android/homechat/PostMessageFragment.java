@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
  */
 public class PostMessageFragment extends Fragment {
 
+    private static final String TAG = "PostMessageFragment";
+
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 100;
 
     private ImageButton mPhotoPickerButton;
