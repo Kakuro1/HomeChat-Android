@@ -14,6 +14,10 @@ import android.view.MenuItem;
 
 public class ScrollingActivity extends AppCompatActivity {
 
+    /**
+     * onCreate for the Activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
