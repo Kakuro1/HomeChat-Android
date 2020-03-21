@@ -35,6 +35,14 @@
 
     <include layout="@layout/content_scrolling" />
 
+    <!-- Fragment for writing messages -->
+    <fragment android:name="com.example.android.homechat.PostMessageFragment"
+        android:id="@+id/post_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/content_scrolling"
+        app:layout_anchorGravity="bottom" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

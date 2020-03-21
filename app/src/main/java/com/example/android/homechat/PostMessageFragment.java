@@ -18,6 +18,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 
+/**
+ * Post messages in the group
+ */
 public class PostMessageFragment extends Fragment {
 
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 100;
@@ -26,16 +29,20 @@ public class PostMessageFragment extends Fragment {
     private EditText mMessageEditText;
     private Button mSendButton;
 
-
+    /**
+     * public constructor is always needed...
+     */
     public PostMessageFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         // Inflate the fragment layout
         View rootView = inflater.inflate(R.layout.fragment_post, container, false);
 
+        // get all the UI elements
         mPhotoPickerButton = (ImageButton) rootView.findViewById(R.id.photoPickerButton);
         mMessageEditText = (EditText) rootView.findViewById(R.id.messageEditText);
         mSendButton = (Button) rootView.findViewById(R.id.sendButton);
@@ -58,6 +65,7 @@ public class PostMessageFragment extends Fragment {
             }
         });
 
+        // Add a Filter which makes sure that the message doesn't exceed the length limit
         mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(DEFAULT_MSG_LENGTH_LIMIT)});
 
         // Send button sends a message and clears the EditText
