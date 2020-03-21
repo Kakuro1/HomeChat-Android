@@ -37,15 +37,6 @@ public class ScrollingActivity extends AppCompatActivity {
         PostMessageFragment postMessageFragment =
                 (PostMessageFragment) getSupportFragmentManager().findFragmentById(R.id.post_fragment);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         ListView messageLV = (ListView) findViewById(R.id.content_scrolling);
         System.out.println("TEST "+messageLV);
 
@@ -70,7 +61,6 @@ public class ScrollingActivity extends AppCompatActivity {
 
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
-                System.out.println("TEST WTF");
                 if(view == null)
                     view = getLayoutInflater().inflate(R.layout.message_layout, viewGroup, false);
                 TextView msgTextView = view.findViewById(R.id.msgTextView);
