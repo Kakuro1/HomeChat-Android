@@ -3,9 +3,11 @@ package com.example.android.homechat;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 
+import com.example.android.homechat.ServerCommunication.MessageEventListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,9 +20,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ScrollingActivity extends AppCompatActivity {
 
     private static final String TAG = "ScrollingActivity";
+    private ArrayList<Message> msgList = new ArrayList<Message>();
 
     /**
      * onCreate for the Activity
@@ -37,21 +42,18 @@ public class ScrollingActivity extends AppCompatActivity {
         PostMessageFragment postMessageFragment =
                 (PostMessageFragment) getSupportFragmentManager().findFragmentById(R.id.post_fragment);
 
-        ListView messageLV = (ListView) findViewById(R.id.content_scrolling);
+        final ListView messageLV = (ListView) findViewById(R.id.content_scrolling);
         System.out.println("TEST "+messageLV);
 
         messageLV.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                System.out.println("TEST HM");
-                return 1;
+                return msgList.size();
             }
 
             @Override
             public Object getItem(int i) {
-                if(i == 0)
-                    return "LOL";
-                return null;
+                return msgList.get(i);
             }
 
             @Override
@@ -61,13 +63,22 @@ public class ScrollingActivity extends AppCompatActivity {
 
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
+                Message curMsg = msgList.get(i);
                 if(view == null)
                     view = getLayoutInflater().inflate(R.layout.message_layout, viewGroup, false);
                 TextView msgTextView = view.findViewById(R.id.msgTextView);
-                msgTextView.setText("LOL");
+                msgTextView.setText(curMsg.getMsg());
                 return view;
             }
         });
+
+        MessageEventListener mev = new MessageEventListener() {
+            @Override
+            public void onMsgAdded(@NonNull Message msg) {
+                msgList.add(msg);
+                ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
+            }
+        };
     }
 
     @Override
