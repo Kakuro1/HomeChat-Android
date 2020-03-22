@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.location.Location;
+import android.widget.EditText;
 
 import com.example.android.homechat.ServerCommunication.Authentication;
 import com.example.android.homechat.ServerCommunication.Database;
@@ -34,7 +35,9 @@ public class JoinActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
 
     ArrayList<Group> groupList = new ArrayList<Group>();
+    ArrayList<String> groupListID = new ArrayList<String>();
     ArrayList<Group> nearGroupsList = new ArrayList<Group>();
+    ArrayList<boolean[]> nearGroupsListselected = new ArrayList<boolean[]>();
     Group selectedGroup = null;
     private double myLat,myLon;
 
@@ -76,16 +79,23 @@ public class JoinActivity extends AppCompatActivity {
                 groupNameTV.setText(curGroup.getName());
                 TextView groupLoctionTV = view.findViewById(R.id.groupLoctionTV);
                 groupLoctionTV.setText("N: "+String.format("%3f",curGroup.getLat())+" E: "+String.format("%3f",curGroup.getLon()));
+                if(nearGroupsListselected.get(i)[0])
+                    view.setBackgroundColor(Color.GRAY);
+                else
+                    view.setBackgroundColor(Color.WHITE);
                 return view;
             }
         });
 
-        availableGroupsLV.setOnItemClickListener(new OnItemCL());
+        OnItemCL onitemcl = new OnItemCL();
+        onitemcl.ja = this;
+        availableGroupsLV.setOnItemClickListener(onitemcl);
 
         GroupEventListener gev = new GroupEventListener() {
             @Override
-            public void onGroupAdded(@NonNull Group g) {
+            public void onGroupAdded(@NonNull Group g,String key) {
                 groupList.add(g);
+                groupListID.add(key);
                 Log.d(TAG, "msg is: "+g);
                 ((BaseAdapter)availableGroupsLV.getAdapter()).notifyDataSetChanged();
             }
@@ -93,9 +103,19 @@ public class JoinActivity extends AppCompatActivity {
         Database.attachDatabaseReadListener(gev);
     }
     protected class OnItemCL implements AdapterView.OnItemClickListener {
+        JoinActivity ja = null;
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            for(int j = 0;j < nearGroupsList.size();j++){
+                if(i != j)
+                    nearGroupsListselected.get(j)[0] = false;
+            }
+            nearGroupsListselected.get(i)[0] = true;//!nearGroupsListselected.get(i)[0];
+            ((BaseAdapter)((ListView)findViewById(R.id.availableGroupsLV)).getAdapter()).notifyDataSetChanged();
+            Database.setUsernameToDatabase(((EditText)(findViewById(R.id.usernamePT))).getText().toString());
+            Database.setUsergroupToDatabase(groupListID.get(i));
+            Intent intent = new Intent(ja, ScrollingActivity.class);
+            startActivity(intent);
         }
     };
 
@@ -107,12 +127,18 @@ public class JoinActivity extends AppCompatActivity {
             final TextView myLocationStatusTV = (TextView) findViewById(R.id.myLocationStatusTV);
             myLocationStatusTV.setText("My location: N "+String.format("%3f",myLat)+" E"+String.format("%3f",myLon));
             nearGroupsList.clear();
+            nearGroupsListselected.clear();
+            System.out.println("TEST UPDATE");
             for(int i = 0;i < groupList.size();i++){
                 Group g = groupList.get(i);
                 float[] result = new float[3];
                 Location.distanceBetween(myLon,myLat,g.getLon(),g.getLat(),result);
-                if(result[0] < 50)// result[0] is in meters
+                if(result[0] < 50) {// result[0] is in meters
                     nearGroupsList.add(g);
+                    boolean[] b = new boolean[1];
+                    b[0] = false;
+                    nearGroupsListselected.add(b);
+                }
             }
             ((BaseAdapter)((ListView)findViewById(R.id.availableGroupsLV)).getAdapter()).notifyDataSetChanged();
         }

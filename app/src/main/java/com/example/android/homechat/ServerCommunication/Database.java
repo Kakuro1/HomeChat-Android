@@ -68,6 +68,18 @@ public abstract class Database {
         }
     }
 
+    public static void setUsernameToDatabase(String username) {
+        if (getUserRef() != null) {
+            getUserRef().child("username").setValue(username);
+        }
+    }
+
+    public static void setUsergroupToDatabase(String g) {
+        if (getUserRef() != null) {
+            getUserRef().child("homeGroupId").setValue(g);
+        }
+    }
+
     public static void saveMsgToDatabase(Message msg) {
         msg.setSender(Authentication.getCurrentUsername());
         getGroupRef().push().setValue(msg);
