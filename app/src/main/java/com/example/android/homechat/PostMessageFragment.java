@@ -80,7 +80,7 @@ public class PostMessageFragment extends Fragment {
                 mMessageEditText.setText("");
 
                 // TODO: Send messages on click
-                Database.saveMsgToDatabase(writtenMsg);
+                Database.saveMsgToDatabase(new Message(writtenMsg));
             }
         });
 

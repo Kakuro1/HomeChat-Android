@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static com.example.android.homechat.ServerCommunication.Database.attachDatabaseReadListener;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -35,6 +38,7 @@ public class ScrollingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
+        Log.e(TAG, "up and running!");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,9 +80,11 @@ public class ScrollingActivity extends AppCompatActivity {
             @Override
             public void onMsgAdded(@NonNull Message msg) {
                 msgList.add(msg);
+                Log.e(TAG, "msg is: "+msg);
                 ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
             }
         };
+        attachDatabaseReadListener(mev);
     }
 
     @Override

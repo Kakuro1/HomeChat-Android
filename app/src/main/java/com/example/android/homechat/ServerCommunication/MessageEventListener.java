@@ -1,5 +1,7 @@
 package com.example.android.homechat.ServerCommunication;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -9,9 +11,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 public abstract class MessageEventListener implements ChildEventListener {
+
+    private static final String TAG = "MessageEventListener";
+
     @Override
     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
         Message msg = dataSnapshot.getValue(Message.class);
+        Log.e(TAG, "msg is: "+msg);
         onMsgAdded(msg);
         return;
     }

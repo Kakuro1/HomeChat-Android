@@ -1,12 +1,15 @@
 package com.example.android.homechat.ServerCommunication;
 
 
+import android.util.Log;
+
+import com.example.android.homechat.Message;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public abstract class Database {
 
-    private static final String TAG = "ServerCommunication/Database";
+    private static final String TAG = "Database";
 
     private static FirebaseDatabase database;
     private static DatabaseReference userRef;
@@ -36,11 +39,12 @@ public abstract class Database {
         return groupRef;
     }
 
-    public static void saveMsgToDatabase(String msg) {
+    public static void saveMsgToDatabase(Message msg) {
         getGroupRef().push().setValue(msg);
     }
 
     public static void attachDatabaseReadListener(MessageEventListener msgListener) {
         getGroupRef().addChildEventListener(msgListener);
+        Log.e(TAG, "test");
     }
 }
