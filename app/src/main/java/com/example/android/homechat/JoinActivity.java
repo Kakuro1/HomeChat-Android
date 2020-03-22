@@ -3,6 +3,7 @@ package com.example.android.homechat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.example.android.homechat.ServerCommunication.Authentication;
 import com.example.android.homechat.ServerCommunication.Database;
 import com.example.android.homechat.ServerCommunication.GroupEventListener;
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,16 +43,20 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
+        AuthUI.getInstance()
+                .signOut(this);
+
         if (!Authentication.userSignedIn()) {
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setAvailableProviders(Arrays.asList(
-                                    //new AuthUI.IdpConfig.EmailBuilder().build(),
+                                    new AuthUI.IdpConfig.EmailBuilder().build(),
                                     new AuthUI.IdpConfig.AnonymousBuilder().build()))
                             .build(),
                     RC_SIGN_IN);
         }
+        Log.e(TAG, "fuck it");
 
         LocationUtils.attachLocationListener(this, new MyLocationListener());
 
@@ -136,4 +143,34 @@ public class JoinActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            // Successfully signed in
+            if (resultCode == RESULT_OK) {
+                //startActivity(SignedInActivity.createIntent(this, response));
+                //finish();
+            } else {
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+                    //showSnackbar(R.string.sign_in_cancelled);
+                    return;
+                }
+
+                if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    //showSnackbar(R.string.no_internet_connection);
+                    return;
+                }
+
+                //showSnackbar(R.string.unknown_error);
+                Log.e(TAG, "Sign-in error: ", response.getError());
+            }
+        }
+    }
 }

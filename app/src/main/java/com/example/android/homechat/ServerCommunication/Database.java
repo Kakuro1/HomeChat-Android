@@ -62,7 +62,7 @@ public abstract class Database {
         return groupRef;
     }
 
-    public static void saveUserToDatabase(User user) {
+    public static void saveUserToDatabase() {
         if (getUserRef() != null) {
             getUserRef().child("username").setValue(Authentication.getCurrentUsername());
         }
