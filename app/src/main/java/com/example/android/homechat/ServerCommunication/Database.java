@@ -86,7 +86,9 @@ public abstract class Database {
     }
 
     public static void detachDatabaseReadListener() {
-        getGroupRef().removeEventListener(msgListener);
-        getGroupListRef().removeEventListener(groupListener);
+        if (msgListener != null)
+            getGroupRef().removeEventListener(msgListener);
+        if (groupListener != null)
+            getGroupListRef().removeEventListener(groupListener);
     }
 }

@@ -41,6 +41,7 @@ public class ScrollingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scrolling);
         Log.d(TAG, "up and running!");
 
+        //TODO
         if (!Authentication.userSignedIn()) {
             Authentication.signInAnonymously(this);
         }
