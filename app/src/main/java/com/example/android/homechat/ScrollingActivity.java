@@ -70,6 +70,8 @@ public class ScrollingActivity extends AppCompatActivity {
                 Message curMsg = msgList.get(i);
                 if(view == null)
                     view = getLayoutInflater().inflate(R.layout.message_layout, viewGroup, false);
+                TextView senderTextView = view.findViewById(R.id.senderTextView);
+                senderTextView.setText(curMsg.getSender());
                 TextView msgTextView = view.findViewById(R.id.msgTextView);
                 msgTextView.setText(curMsg.getMsg());
                 return view;
