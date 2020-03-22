@@ -3,6 +3,7 @@ package com.example.android.homechat;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 
+import com.example.android.homechat.ServerCommunication.Authentication;
 import com.example.android.homechat.ServerCommunication.MessageEventListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,6 +40,10 @@ public class ScrollingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
         Log.d(TAG, "up and running!");
+
+        if (!Authentication.userSignedIn()) {
+            Authentication.signInAnonymously(this);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,6 +92,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         };
         attachDatabaseReadListener(mev);
+        //TODO detach database read listener in OnDestroy()
     }
 
     @Override

@@ -16,6 +16,10 @@ public abstract class Database {
     private static DatabaseReference groupRef;
 
 
+    /**
+     * Caching of the firebase database instance
+     * @return FirebaseDatabase instance
+     */
     private static FirebaseDatabase getFirebaseDatabase() {
         if (database == null) {
             database = FirebaseDatabase.getInstance();
@@ -23,10 +27,18 @@ public abstract class Database {
         return database;
     }
 
+    /**
+     * Caching of the firebase current user database reference (path)
+     * @return Reference to the currents user data, null if no user is currently signed in
+     */
     private static DatabaseReference getUserRef() {
-        if (userRef == null) {
-            //TODO
-            userRef = getFirebaseDatabase().getReference("v1/users/user1");
+        if(Authentication.userSignedIn()) { // set cache only if the user is signed in
+            if (userRef == null) {
+                userRef = getFirebaseDatabase().getReference("v1/users/" + Authentication.getCurrentUserID());
+            }
+        }
+        else { // set cache to null if no user is signed in
+            userRef = null;
         }
         return userRef;
     }
@@ -39,7 +51,14 @@ public abstract class Database {
         return groupRef;
     }
 
+    public static void saveUserToDatabase() {
+        if (getUserRef() != null) {
+            getUserRef().child("username").setValue(Authentication.getCurrentUsername());
+        }
+    }
+
     public static void saveMsgToDatabase(Message msg) {
+        msg.setSender(Authentication.getCurrentUsername());
         getGroupRef().push().setValue(msg);
     }
 
