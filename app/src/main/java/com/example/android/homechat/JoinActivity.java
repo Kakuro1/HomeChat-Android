@@ -47,6 +47,10 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
+        if (!Authentication.userSignedIn()) {
+            Authentication.signInAnonymously(this);
+        }
+
         LocationUtils.attachLocationListener(this, new MyLocationListener());
 
         final ListView availableGroupsLV = (ListView) findViewById(R.id.availableGroupsLV);
