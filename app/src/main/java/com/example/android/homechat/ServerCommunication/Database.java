@@ -18,6 +18,7 @@ public abstract class Database {
     private static DatabaseReference groupInfoRef;
 
     public static String groupID = "";
+    private static String username = "";
 
     private static MessageEventListener msgListener;
     private static GroupEventListener groupListener;
@@ -82,7 +83,7 @@ public abstract class Database {
     }
 
     public static void saveMsgToDatabase(Message msg) {
-        msg.setSender(Authentication.getCurrentUsername());
+        msg.setSender(getUsername());
         getGroupRef().push().setValue(msg);
     }
 
@@ -109,5 +110,13 @@ public abstract class Database {
             getGroupRef().removeEventListener(msgListener);
         if (groupListener != null)
             getGroupListRef().removeEventListener(groupListener);
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void setUsername(String username) {
+        Database.username = username;
     }
 }

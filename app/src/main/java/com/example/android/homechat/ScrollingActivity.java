@@ -92,21 +92,21 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onUserChange(@NonNull User u) {
                 user = u;
                 Database.groupID = user.getHomeGroupId();
+                Database.setUsername(user.getUsername());
                 Log.d(TAG, "user is: "+u.getHomeGroupId());
-                ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
+
+                MessageEventListener mev = new MessageEventListener() {
+                    @Override
+                    public void onMsgAdded(@NonNull Message msg) {
+                        msgList.add(msg);
+                        Log.d(TAG, "msg is: "+msg);
+                        ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
+                    }
+                };
+                Database.attachDatabaseReadListener(mev);
             }
         };
         Database.attachDatabaseUserListener(uev);
-
-        MessageEventListener mev = new MessageEventListener() {
-            @Override
-            public void onMsgAdded(@NonNull Message msg) {
-                msgList.add(msg);
-                Log.d(TAG, "msg is: "+msg);
-                ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
-            }
-        };
-        Database.attachDatabaseReadListener(mev);
 
 
     }
