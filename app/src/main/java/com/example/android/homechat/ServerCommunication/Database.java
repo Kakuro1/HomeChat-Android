@@ -4,6 +4,7 @@ package com.example.android.homechat.ServerCommunication;
 import android.util.Log;
 
 import com.example.android.homechat.Message;
+import com.example.android.homechat.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -56,13 +57,12 @@ public abstract class Database {
 
     private static DatabaseReference getGroupListRef() {
         if (groupRef == null) {
-            //TODO
             groupRef = getFirebaseDatabase().getReference("v1/groupInfos");
         }
         return groupRef;
     }
 
-    public static void saveUserToDatabase() {
+    public static void saveUserToDatabase(User user) {
         if (getUserRef() != null) {
             getUserRef().child("username").setValue(Authentication.getCurrentUsername());
         }

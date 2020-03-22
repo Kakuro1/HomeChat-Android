@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.android.homechat.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,7 +20,8 @@ public abstract class Authentication {
 
     // Cache variables
     private static FirebaseAuth auth;
-    private static FirebaseUser user;
+    private static FirebaseUser firebaseUser;
+    private static User user;
 
 
     /**
@@ -38,10 +40,10 @@ public abstract class Authentication {
      * @return Currently signed in FirebaseUser
      */
     private static FirebaseUser getCurrentUser() {
-        if (user == null) {
-            user = getFirebaseAuth().getCurrentUser();
+        if (firebaseUser == null) {
+            firebaseUser = getFirebaseAuth().getCurrentUser();
         }
-        return user;
+        return firebaseUser;
     }
 
     /**
@@ -89,7 +91,7 @@ public abstract class Authentication {
                         if (task.isSuccessful()) {
                             // Sign in success
                             Log.d(TAG, "signInAnonymously:success");
-                            user = getFirebaseAuth().getCurrentUser();
+                            firebaseUser = getFirebaseAuth().getCurrentUser();
                             Database.saveUserToDatabase();
                         } else {
                             // If sign in fails, display a message to the user.

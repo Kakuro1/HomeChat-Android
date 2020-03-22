@@ -15,15 +15,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.location.Location;
 
+import com.example.android.homechat.ServerCommunication.Authentication;
 import com.example.android.homechat.ServerCommunication.Database;
 import com.example.android.homechat.ServerCommunication.GroupEventListener;
+import com.firebase.ui.auth.AuthUI;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.example.android.homechat.ServerCommunication.Database.attachDatabaseReadListener;
 
 public class JoinActivity extends AppCompatActivity {
     private static final String TAG = "JoinActivity";
+    // Choose an arbitrary request code value
+    private static final int RC_SIGN_IN = 123;
 
     ArrayList<Group> groupList = new ArrayList<Group>();
     ArrayList<Group> nearGroupsList = new ArrayList<Group>();
@@ -34,6 +39,17 @@ public class JoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
+
+        if (!Authentication.userSignedIn()) {
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(Arrays.asList(
+                                    //new AuthUI.IdpConfig.EmailBuilder().build(),
+                                    new AuthUI.IdpConfig.AnonymousBuilder().build()))
+                            .build(),
+                    RC_SIGN_IN);
+        }
 
         LocationUtils.attachLocationListener(this, new MyLocationListener());
 
