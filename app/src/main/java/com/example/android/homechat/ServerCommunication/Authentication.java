@@ -1,13 +1,11 @@
 package com.example.android.homechat.ServerCommunication;
 
-import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.android.homechat.ScrollingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -83,7 +81,7 @@ public abstract class Authentication {
      * gives the user of the app an anonymous account
      * @param activity activity which executes the sign-in workflow
      */
-    public static void signInAnonymously(final Activity activity) {
+    public static void signInAnonymously(final AppCompatActivity activity) {
         getFirebaseAuth().signInAnonymously()
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override

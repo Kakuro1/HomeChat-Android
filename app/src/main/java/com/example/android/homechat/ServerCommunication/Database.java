@@ -15,6 +15,8 @@ public abstract class Database {
     private static DatabaseReference userRef;
     private static DatabaseReference groupRef;
 
+    private static MessageEventListener msgListener;
+
 
     /**
      * Caching of the firebase database instance
@@ -63,7 +65,12 @@ public abstract class Database {
     }
 
     public static void attachDatabaseReadListener(MessageEventListener msgListener) {
+        Database.msgListener = msgListener;
         getGroupRef().addChildEventListener(msgListener);
         Log.d(TAG, "test");
+    }
+
+    public static void detachDatabaseReadListener() {
+        getGroupRef().removeEventListener(msgListener);
     }
 }
