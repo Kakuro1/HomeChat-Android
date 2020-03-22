@@ -37,6 +37,7 @@ public class JoinActivity extends AppCompatActivity {
     ArrayList<Group> groupList = new ArrayList<Group>();
     ArrayList<String> groupListID = new ArrayList<String>();
     ArrayList<Group> nearGroupsList = new ArrayList<Group>();
+    ArrayList<String> nearGroupsListID = new ArrayList<String>();
     ArrayList<boolean[]> nearGroupsListselected = new ArrayList<boolean[]>();
     Group selectedGroup = null;
     private double myLat,myLon;
@@ -109,7 +110,7 @@ public class JoinActivity extends AppCompatActivity {
             nearGroupsListselected.get(i)[0] = true;//!nearGroupsListselected.get(i)[0];
             ((BaseAdapter)((ListView)findViewById(R.id.availableGroupsLV)).getAdapter()).notifyDataSetChanged();
             Database.setUsernameToDatabase(((EditText)(findViewById(R.id.usernamePT))).getText().toString());
-            Database.setUsergroupToDatabase(groupListID.get(i));
+            Database.setUsergroupToDatabase(nearGroupsListID.get(i));
             Intent intent = new Intent(ja, ScrollingActivity.class);
             startActivity(intent);
         }
@@ -124,6 +125,7 @@ public class JoinActivity extends AppCompatActivity {
             myLocationStatusTV.setText("My location: N "+String.format("%3f",myLat)+" E"+String.format("%3f",myLon));
             nearGroupsList.clear();
             nearGroupsListselected.clear();
+            nearGroupsListID.clear();
             System.out.println("TEST UPDATE");
             for(int i = 0;i < groupList.size();i++){
                 Group g = groupList.get(i);
@@ -134,6 +136,7 @@ public class JoinActivity extends AppCompatActivity {
                     boolean[] b = new boolean[1];
                     b[0] = false;
                     nearGroupsListselected.add(b);
+                    nearGroupsListID.add(groupListID.get(i));
                 }
             }
             ((BaseAdapter)((ListView)findViewById(R.id.availableGroupsLV)).getAdapter()).notifyDataSetChanged();
