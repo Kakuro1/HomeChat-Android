@@ -1,5 +1,7 @@
 package com.example.android.homechat.ServerCommunication;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.android.homechat.User;
@@ -14,7 +16,9 @@ public abstract class UserEventListener implements ValueEventListener {
 
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        Log.e(TAG, dataSnapshot.getValue().toString());
         User user = dataSnapshot.getValue(User.class);
+        Log.e(TAG, user.getHomeGroupId());
         onUserChange(user);
         return;
     }
