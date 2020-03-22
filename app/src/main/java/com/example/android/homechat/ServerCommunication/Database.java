@@ -18,6 +18,7 @@ public abstract class Database {
 
     private static MessageEventListener msgListener;
     private static GroupEventListener groupListener;
+    private static UserEventListener userListener;
 
 
     /**
@@ -95,6 +96,12 @@ public abstract class Database {
         Database.groupListener = groupListener;
         getGroupListRef().addChildEventListener(groupListener);
         Log.d(TAG, "test_gev");
+    }
+
+    public static void attachDatabaseUserListener(UserEventListener userListener) {
+        Database.userListener = userListener;
+        getUserRef().addValueEventListener(userListener);
+        //TODO detach
     }
 
     public static void detachDatabaseReadListener() {
