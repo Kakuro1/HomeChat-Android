@@ -87,6 +87,17 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
 
+        UserEventListener uev = new UserEventListener() {
+            @Override
+            public void onUserChange(@NonNull User u) {
+                user = u;
+                Database.groupID = user.getHomeGroupId();
+                Log.d(TAG, "user is: "+u.toString());
+                ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
+            }
+        };
+        Database.attachDatabaseUserListener(uev);
+
         MessageEventListener mev = new MessageEventListener() {
             @Override
             public void onMsgAdded(@NonNull Message msg) {
@@ -97,16 +108,7 @@ public class ScrollingActivity extends AppCompatActivity {
         };
         Database.attachDatabaseReadListener(mev);
 
-        UserEventListener uev = new UserEventListener() {
-            @Override
-            public void onUserChanged(@NonNull User u) {
-                user = u;
-                Database.groupID = user.getHomeGroupId();
-                Log.d(TAG, "user is: "+u.toString());
-                ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
-            }
-        };
-        Database.attachDatabaseReadListener(uev);
+
     }
 
     @Override

@@ -15,6 +15,7 @@ public abstract class Database {
     private static FirebaseDatabase database;
     private static DatabaseReference userRef;
     private static DatabaseReference groupRef;
+    private static DatabaseReference groupInfoRef;
 
     public static String groupID = "";
 
@@ -59,10 +60,10 @@ public abstract class Database {
     }
 
     private static DatabaseReference getGroupListRef() {
-        if (groupRef == null) {
-            groupRef = getFirebaseDatabase().getReference("v1/groupInfos");
+        if (groupInfoRef == null) {
+            groupInfoRef = getFirebaseDatabase().getReference("v1/groupInfos");
         }
-        return groupRef;
+        return groupInfoRef;
     }
 
     public static void saveUserToDatabase() {
