@@ -18,7 +18,7 @@ public abstract class GroupEventListener implements ChildEventListener {
     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
         Group g = dataSnapshot.getValue(Group.class);
         Log.d(TAG, "group is: "+g);
-        onGroupAdded(g);
+        onGroupAdded(g,dataSnapshot.getKey());
         return;
     }
 
@@ -42,5 +42,5 @@ public abstract class GroupEventListener implements ChildEventListener {
         return;
     }
 
-    public abstract void onGroupAdded(@NonNull Group g);
+    public abstract void onGroupAdded(@NonNull Group g,String key);
 }

@@ -13,8 +13,7 @@
         android:text="Button"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/myLocationStatusTV"
@@ -39,4 +38,16 @@
         app:layout_constraintTop_toBottomOf="@+id/myLocationStatusTV">
 
     </ListView>
+
+    <EditText
+        android:id="@+id/usernamePT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Benutzername"
+        app:layout_constraintEnd_toStartOf="@+id/joinGroupB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/availableGroupsLV"
+        tools:hint="bla" />
 </androidx.constraintlayout.widget.ConstraintLayout>
