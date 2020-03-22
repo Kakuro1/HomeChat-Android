@@ -4,6 +4,7 @@ import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import com.example.android.homechat.ServerCommunication.Authentication;
+import com.example.android.homechat.ServerCommunication.Database;
 import com.example.android.homechat.ServerCommunication.MessageEventListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -24,7 +25,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static com.example.android.homechat.ServerCommunication.Database.attachDatabaseReadListener;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -91,8 +91,13 @@ public class ScrollingActivity extends AppCompatActivity {
                 ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
             }
         };
-        attachDatabaseReadListener(mev);
-        //TODO detach database read listener in OnDestroy()
+        Database.attachDatabaseReadListener(mev);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Database.detachDatabaseReadListener();
     }
 
     @Override
