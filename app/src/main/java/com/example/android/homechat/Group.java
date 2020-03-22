@@ -3,17 +3,17 @@ package com.example.android.homechat;
 import android.location.Location;
 
 public class Group {
-    public float getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    private float lat;
+    private double lat;
 
-    public float getLon() {
+    public double getLon() {
         return lon;
     }
 
@@ -21,7 +21,7 @@ public class Group {
         this.lon = lon;
     }
 
-    private float lon;
+    private double lon;
     private String name;
     public String getName() {
         return name;
