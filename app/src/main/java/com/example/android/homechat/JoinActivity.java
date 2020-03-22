@@ -63,7 +63,7 @@ public class JoinActivity extends AppCompatActivity {
                 TextView groupNameTV = view.findViewById(R.id.groupNameTV);
                 groupNameTV.setText(curGroup.getName());
                 TextView groupLoctionTV = view.findViewById(R.id.groupLoctionTV);
-                groupLoctionTV.setText("N: "+curGroup.getLat()+" E: "+curGroup.getLon());
+                groupLoctionTV.setText("N: "+String.format("%3f",curGroup.getLat())+" E: "+String.format("%3f",curGroup.getLon()));
                 return view;
             }
         });
@@ -90,16 +90,16 @@ public class JoinActivity extends AppCompatActivity {
     protected class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {
-            myLat = 0.1;//location.getLatitude();
-            myLon = 3.4;//location.getLongitude();
-            System.out.println("TEST LAT: "+myLat+" LON: "+myLon);
+            myLat = location.getLatitude();
+            myLon = location.getLongitude();
+            final TextView myLocationStatusTV = (TextView) findViewById(R.id.myLocationStatusTV);
+            myLocationStatusTV.setText("My location: N "+String.format("%3f",myLat)+" E"+String.format("%3f",myLon));
             nearGroupsList.clear();
             for(int i = 0;i < groupList.size();i++){
                 Group g = groupList.get(i);
                 float[] result = new float[3];
                 Location.distanceBetween(myLon,myLat,g.getLon(),g.getLat(),result);
-                System.out.println("TEST DIST= "+result[0]);
-                if(result[0] < 50)
+                if(result[0] < 50)// result[0] is in meters
                     nearGroupsList.add(g);
             }
             ((BaseAdapter)((ListView)findViewById(R.id.availableGroupsLV)).getAdapter()).notifyDataSetChanged();

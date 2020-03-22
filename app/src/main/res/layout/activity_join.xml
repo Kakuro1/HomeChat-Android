@@ -11,20 +11,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/myLocationStatusTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/availableGroupsLV"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/bg_key"
         android:divider="@android:color/transparent"
         android:stackFromBottom="false"
         android:transcriptMode="alwaysScroll"
-        android:background="@drawable/bg_key"
         app:layout_constraintBottom_toTopOf="@+id/joinGroupB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/myLocationStatusTV">
+
+    </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>
