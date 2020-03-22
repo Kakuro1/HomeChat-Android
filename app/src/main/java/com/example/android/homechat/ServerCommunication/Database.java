@@ -52,10 +52,7 @@ public abstract class Database {
     }
 
     private static DatabaseReference getGroupRef() {
-        if (groupRef == null) {
-            //TODO
-            groupRef = getFirebaseDatabase().getReference("v1/groups/"+groupID);
-        }
+        groupRef = getFirebaseDatabase().getReference("v1/groups/"+groupID);
         return groupRef;
     }
 

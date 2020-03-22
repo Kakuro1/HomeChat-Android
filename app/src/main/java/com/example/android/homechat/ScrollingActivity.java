@@ -92,7 +92,7 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onUserChange(@NonNull User u) {
                 user = u;
                 Database.groupID = user.getHomeGroupId();
-                Log.d(TAG, "user is: "+u.toString());
+                Log.d(TAG, "user is: "+u.getHomeGroupId());
                 ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
             }
         };
