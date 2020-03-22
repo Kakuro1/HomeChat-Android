@@ -1,6 +1,5 @@
 package com.example.android.homechat;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -16,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.android.homechat.ServerCommunication.Database;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
@@ -80,6 +80,7 @@ public class PostMessageFragment extends Fragment {
                 mMessageEditText.setText("");
 
                 // TODO: Send messages on click
+                Database.saveMsgToDatabase(writtenMsg);
             }
         });
 

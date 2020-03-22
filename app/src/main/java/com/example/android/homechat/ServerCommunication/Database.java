@@ -36,6 +36,10 @@ public abstract class Database {
         return groupRef;
     }
 
+    public static void saveMsgToDatabase(String msg) {
+        getGroupRef().push().setValue(msg);
+    }
+
     public static void attachDatabaseReadListener(MessageEventListener msgListener) {
         getGroupRef().addChildEventListener(msgListener);
     }
