@@ -16,6 +16,8 @@ public abstract class Database {
     private static DatabaseReference userRef;
     private static DatabaseReference groupRef;
 
+    public static String groupID = "";
+
     private static MessageEventListener msgListener;
     private static GroupEventListener groupListener;
 
@@ -50,7 +52,7 @@ public abstract class Database {
     private static DatabaseReference getGroupRef() {
         if (groupRef == null) {
             //TODO
-            groupRef = getFirebaseDatabase().getReference("v1/groups/group1");
+            groupRef = getFirebaseDatabase().getReference("v1/groups/"+groupID);
         }
         return groupRef;
     }

@@ -23,6 +23,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.android.homechat.ServerCommunication.UserEventListener;
+
 import java.util.ArrayList;
 
 
@@ -30,6 +32,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
     private static final String TAG = "ScrollingActivity";
     private ArrayList<Message> msgList = new ArrayList<Message>();
+    private User user;
 
     /**
      * onCreate for the Activity
@@ -93,6 +96,17 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         };
         Database.attachDatabaseReadListener(mev);
+
+        UserEventListener uev = new UserEventListener() {
+            @Override
+            public void onUserChanged(@NonNull User u) {
+                user = u;
+                Database.groupID = user.getHomeGroupId();
+                Log.d(TAG, "user is: "+u.toString());
+                ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
+            }
+        };
+        Database.attachDatabaseReadListener(uev);
     }
 
     @Override
