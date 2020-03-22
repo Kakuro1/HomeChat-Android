@@ -17,7 +17,7 @@ public abstract class MessageEventListener implements ChildEventListener {
     @Override
     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
         Message msg = dataSnapshot.getValue(Message.class);
-        Log.e(TAG, "msg is: "+msg);
+        Log.d(TAG, "msg is: "+msg);
         onMsgAdded(msg);
         return;
     }

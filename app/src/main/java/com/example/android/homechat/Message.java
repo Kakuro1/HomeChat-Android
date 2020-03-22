@@ -3,6 +3,7 @@ package com.example.android.homechat;
 public class Message {
     public String msg;
 
+    // default constructor for Firebase de-/serializing
     public Message() { }
     public Message(String msg){
         setMsg(msg);

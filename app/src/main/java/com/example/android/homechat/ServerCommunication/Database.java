@@ -45,6 +45,6 @@ public abstract class Database {
 
     public static void attachDatabaseReadListener(MessageEventListener msgListener) {
         getGroupRef().addChildEventListener(msgListener);
-        Log.e(TAG, "test");
+        Log.d(TAG, "test");
     }
 }

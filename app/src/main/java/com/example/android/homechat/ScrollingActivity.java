@@ -38,7 +38,7 @@ public class ScrollingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
-        Log.e(TAG, "up and running!");
+        Log.d(TAG, "up and running!");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,7 +80,7 @@ public class ScrollingActivity extends AppCompatActivity {
             @Override
             public void onMsgAdded(@NonNull Message msg) {
                 msgList.add(msg);
-                Log.e(TAG, "msg is: "+msg);
+                Log.d(TAG, "msg is: "+msg);
                 ((BaseAdapter)messageLV.getAdapter()).notifyDataSetChanged();
             }
         };
