@@ -1,9 +1,11 @@
 package com.example.android.homechat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,11 +14,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.location.Location;
 
+import com.example.android.homechat.ServerCommunication.Database;
+import com.example.android.homechat.ServerCommunication.GroupEventListener;
+
 import java.util.ArrayList;
 
 import static com.example.android.homechat.ServerCommunication.Database.attachDatabaseReadListener;
 
 public class JoinActivity extends AppCompatActivity {
+    private static final String TAG = "JoinActivity";
+
     ArrayList<Group> groupList = new ArrayList<Group>();
     Group selectedGroup = null;
 
@@ -51,15 +58,22 @@ public class JoinActivity extends AppCompatActivity {
                 TextView groupNameTV = view.findViewById(R.id.groupNameTV);
                 groupNameTV.setText(curGroup.getName());
                 TextView groupLoctionTV = view.findViewById(R.id.groupLoctionTV);
-                //groupLoctionTV.setText(curGroup.getLoc().toString());
+                groupLoctionTV.setText("N: "+curGroup.getLat()+" E: "+curGroup.getLon());
                 return view;
             }
         });
 
         availableGroupsLV.setOnItemClickListener(new OnItemCL());
-        availableGroupsLV.setSelection(0);
 
-        //attachDatabaseReadListener();
+        GroupEventListener gev = new GroupEventListener() {
+            @Override
+            public void onGroupAdded(@NonNull Group g) {
+                groupList.add(g);
+                Log.d(TAG, "msg is: "+g);
+                ((BaseAdapter)availableGroupsLV.getAdapter()).notifyDataSetChanged();
+            }
+        };
+        Database.attachDatabaseReadListener(gev);
     }
     protected class OnItemCL implements AdapterView.OnItemClickListener {
         @Override

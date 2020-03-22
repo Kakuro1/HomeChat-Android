@@ -16,6 +16,7 @@ public abstract class Database {
     private static DatabaseReference groupRef;
 
     private static MessageEventListener msgListener;
+    private static GroupEventListener groupListener;
 
 
     /**
@@ -53,6 +54,14 @@ public abstract class Database {
         return groupRef;
     }
 
+    private static DatabaseReference getGroupListRef() {
+        if (groupRef == null) {
+            //TODO
+            groupRef = getFirebaseDatabase().getReference("v1/groupInfos");
+        }
+        return groupRef;
+    }
+
     public static void saveUserToDatabase() {
         if (getUserRef() != null) {
             getUserRef().child("username").setValue(Authentication.getCurrentUsername());
@@ -70,7 +79,14 @@ public abstract class Database {
         Log.d(TAG, "test");
     }
 
+    public static void attachDatabaseReadListener(GroupEventListener groupListener) {
+        Database.groupListener = groupListener;
+        getGroupListRef().addChildEventListener(groupListener);
+        Log.d(TAG, "test_gev");
+    }
+
     public static void detachDatabaseReadListener() {
         getGroupRef().removeEventListener(msgListener);
+        getGroupListRef().removeEventListener(groupListener);
     }
 }

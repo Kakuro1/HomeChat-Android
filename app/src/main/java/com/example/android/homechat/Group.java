@@ -3,25 +3,25 @@ package com.example.android.homechat;
 import android.location.Location;
 
 public class Group {
-    public float getN() {
-        return N;
+    public float getLat() {
+        return lat;
     }
 
-    public void setN(float n) {
-        N = n;
+    public void setLat(float lat) {
+        this.lat = lat;
     }
 
-    private float N;
+    private float lat;
 
-    public float getE() {
-        return E;
+    public float getLon() {
+        return lon;
     }
 
-    public void setE(float e) {
-        E = e;
+    public void setLon(float lon) {
+        this.lon = lon;
     }
 
-    private float E;
+    private float lon;
     private String name;
     public String getName() {
         return name;
